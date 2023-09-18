@@ -25,6 +25,7 @@ def write_to_file(data, write_file_path, filename, file_extension="json"):
             json.dump(data, f, indent=4)
 
     print("Data written to file: {}".format(write_file_full_path))
+    return write_file_full_path
 
 def read_file(read_file_path, file_extension="json"):
     if os.path.isfile(read_file_path):
