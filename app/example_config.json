@@ -1,0 +1,7 @@
+{
+    "GITHUB_API_TOKEN":"xxxxxxxxxxxxxxxxxxx",
+    "REPO_OWNER":"redhat-openshift-ecosystem",
+    "REPO_NAME":"certified-operators-preprod",
+    "REQUEST_TIME_INTERVAL":2,
+    "RAW_DATA_PATH":"./raw_data"
+}
