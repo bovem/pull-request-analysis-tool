@@ -21,7 +21,8 @@ def request_github_api(request_url, config):
     return response_data
 
 def get_pull_request_pages(config):
-    pr_page_link = "https://api.github.com/repos/{}/{}/pulls?state=all&per_page=100".format(config["REPO_OWNER"], config["REPO_NAME"])
+    pr_page_link = "https://api.github.com/repos/{}/{}/pulls?state=all&per_page=100"
+    pr_page_link = pr_page_link.format(config["REPO_OWNER"], config["REPO_NAME"])
 
     first_pr_page = pr_page_link + "&page=1"
     response = request_github_api(first_pr_page, config)
@@ -45,8 +46,10 @@ def repository_data_fetch(config):
         os.makedirs(config["RAW_DATA_PATH"])
     
     pr_data_file = "pr_data_{}.json".format(time.strftime("%Y%m%d_%H%M%S"))
+    pr_data_file_full_path = os.path.join(config["RAW_DATA_PATH"], pr_data_file)
 
-    with open(os.path.join(config["RAW_DATA_PATH"], pr_data_file), "w") as f:
+    with open(pr_data_file_full_path, "w") as f:
         json.dump(pr_data, f, indent=4)
     
     print("Number of PRs: {}".format(len(pr_data)))
+    print("Data written to file: {}".format(os.path.join(config["RAW_DATA_PATH"], pr_data_file)))
