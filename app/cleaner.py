@@ -12,9 +12,13 @@ def clean_pr_data(config, pr_data_file):
         pr_labels = [x["name"] for x in pr["labels"]]
         cleaned_pr_data.append({
             "PR URL": pr["html_url"],
+            "PR ID": pr["id"],
+            "PR Number": pr["number"],
             "PR State": pr["state"],
             "PR Title": pr["title"],
             "PR Creator": pr["user"]["login"],
+            "PR Forked Repsitory Name": pr["head"]["repo"]["full_name"],
+            "PR Forked Repsitory URL": pr["head"]["repo"]["html_url"],
             "PR Creator Type": pr["user"]["type"],
             "PR Creation Time": pr["created_at"],
             "PR Updation Time": pr["updated_at"],
@@ -54,5 +58,5 @@ def clean_pr_comments_data(config, pr_comments_file):
                   "cleaned_pr_comments_data", 
                   "json")
 
-# clean_pr_data(config, "./raw_data/pr_data_20230918_132543.json")
-clean_pr_comments_data(config, "./raw_data/comments_data_20230918_151849.json")
+clean_pr_data(config, "./raw_data/pr_data_20230918_132543.json")
+# clean_pr_comments_data(config, "./raw_data/comments_data_20230918_151849.json")
