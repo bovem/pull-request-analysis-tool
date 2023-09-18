@@ -3,9 +3,7 @@ import requests
 import math
 import time
 import json
-from utils import load_config, write_to_file, read_file
-
-config = load_config(os.environ.get("PAT_CONFIG_FILE"))
+from utils import write_to_file, read_file
 
 def request_github_api(request_url, config):
     bearer_token = "Bearer {}".format(config["GITHUB_API_TOKEN"])
@@ -42,19 +40,18 @@ def repository_pr_data_fetch(config):
         pr_data += request_github_api(pr_page, config)
         time.sleep(int(config["REQUEST_TIME_INTERVAL"]))
 
-    write_to_file(pr_data, config["RAW_DATA_PATH"], "pr_data", "json")
     print("Number of PRs: {}".format(len(pr_data)))
+    pr_data_file_path = write_to_file(pr_data, config["RAW_DATA_PATH"], "pr_data", "json")
+    return pr_data_file_path
 
-def repository_comment_data_fetch(cleaned_pr_data, config):
+def repository_comment_data_fetch(config, cleaned_pr_data):
     pr_data = read_file(cleaned_pr_data)
 
     comments_data = []
-    for pr in pr_data[:10]:
+    for pr in pr_data:
         comments_data += request_github_api(pr["PR Comments URL"], config)
         time.sleep(int(config["REQUEST_TIME_INTERVAL"]))
 
-    write_to_file(comments_data, config["RAW_DATA_PATH"], "comments_data", "json")
     print("Number of Comments: {}".format(len(pr_data)))
-
-# repository_data_fetch(config)
-#repository_comment_data_fetch("./cleaned_data/cleaned_pr_data_20230918_151654.json", config)
+    pr_comment_data_file_path = write_to_file(comments_data, config["RAW_DATA_PATH"], "comments_data", "json")
+    return pr_comment_data_file_path
