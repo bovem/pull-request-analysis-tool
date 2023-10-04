@@ -1,7 +1,29 @@
 {
-    "GITHUB_API_TOKEN":"xxxxxxxxxxxxxxxxxxx",
-    "REPO_OWNER":"redhat-openshift-ecosystem",
-    "REPO_NAME":"certified-operators-preprod",
-    "REQUEST_TIME_INTERVAL":2,
-    "RAW_DATA_PATH":"./raw_data"
+    "GITHUB_API_TOKEN":"ghp_XXXXXXXXXXXXXXXXXXXXXXX",
+    "REPO_DETAILS":[
+      {
+        "REPO_OWNER":"XXXXXXXXXXXXXX",
+        "REPO_NAME":"XXXXXXXXXXXXXX"
+      },
+      {
+        "REPO_OWNER":"XXXXXXXXXXXXXX",
+        "REPO_NAME":"XXXXXXXXXXXXXX"
+      },
+      {
+        "REPO_OWNER":"XXXXXXXXXXXXXX",
+        "REPO_NAME":"XXXXXXXXXXXXXX"
+      },
+      {
+        "REPO_OWNER":"XXXXXXXXXXXXXX",
+        "REPO_NAME":"XXXXXXXXXXXXXX"
+      }
+    ],
+    "REQUEST_TIME_INTERVAL":0.01,
+    "RAW_DATA_PATH":"./raw_data",
+    "CLEANED_DATA_PATH":"./cleaned_data",
+    "METRICS_DATA_PATH":"./metrics_data",
+    "DB_USERNAME": "root",
+    "DB_PASSWD": "password",
+    "DB_NAME": "pr",
+    "DB_NETWORK": "database"
 }
