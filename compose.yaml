@@ -1,29 +1,52 @@
 services:
 
-  postgres_db:
+  database:
     image: postgres:11.1
     environment:   # Set up postgres database name and password
       POSTGRES_PASSWORD: password
       POSTGRES_DB: pr
       POSTGRES_USER: root
     ports:    # Set up ports exposed for other containers to connect to
-      - 5433:5432
+      - 5432:5432
     networks:
       - pat-network
     volumes:
-      - ./data:/docker-entrypoint-initdb.d
+      - ./postgres-data:/var/lib/postgresql/data
 
-  python_app:
-    image: python:3.7
+  backend:
+    build: ./app/
     volumes:
-      - ./app:/app
+      - ./app:/opt/app
     depends_on:
-      - postgres_db
+      - database
+    environment:
+      - PAT_CONFIG_FILE=./config.json
     networks:
       - pat-network
     command:
       tail -f /dev/null
 
+  frontend:
+    container_name: grafana
+    image: grafana/grafana:latest
+    user: "0:0"
+    environment:
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: database:5432
+      GF_DATABASE_NAME: pr
+      GF_DATABASE_USER: root
+      GF_DATABASE_PASSWORD: password
+      GF_DATABASE_SSL_MODE: disable
+    restart: unless-stopped
+    networks:
+      - pat-network
+    depends_on:
+        - database
+    ports:
+      - 3111:3000
+    volumes:
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml 
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
 
 networks:
   pat-network:
