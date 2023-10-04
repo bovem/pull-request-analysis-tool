@@ -19,9 +19,9 @@ def request_github_api(request_url, config):
     response_data = response.json()
     return response_data
 
-def get_pull_request_pages(config):
+def get_pull_request_pages(config, repo_details):
     pr_page_link = "https://api.github.com/repos/{}/{}/pulls?state=all&per_page=100"
-    pr_page_link = pr_page_link.format(config["REPO_OWNER"], config["REPO_NAME"])
+    pr_page_link = pr_page_link.format(repo_details["REPO_OWNER"], repo_details["REPO_NAME"])
 
     first_pr_page = pr_page_link + "&page=1"
     response = request_github_api(first_pr_page, config)
@@ -32,8 +32,8 @@ def get_pull_request_pages(config):
         pr_pages.append(pr_page_link+"&page={}".format(page_num))
     return pr_pages
 
-def repository_pr_data_fetch(config):
-    pr_pages = get_pull_request_pages(config)
+def repository_pr_data_fetch(config, repo_details):
+    pr_pages = get_pull_request_pages(config, repo_details)
 
     pr_data = []
     for pr_page in pr_pages:
@@ -49,7 +49,7 @@ def repository_comment_data_fetch(config, cleaned_pr_data):
 
     comments_data = []
     for pr in pr_data:
-        comments_data += request_github_api(pr["PR Comments URL"], config)
+        comments_data += request_github_api(pr["pr_comments_url"], config)
         time.sleep(int(config["REQUEST_TIME_INTERVAL"]))
 
     print("Number of Comments: {}".format(len(pr_data)))
