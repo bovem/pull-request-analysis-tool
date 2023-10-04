@@ -1,8 +1,5 @@
 app/config.json
-app/raw_data/pr_data_*.json
-app/cleaned_data/cleaned_pr_data_*.json
-app/cleaned_data/cleaned_pr_comments_data_*.json
-app/raw_data/comments_data_*.json
-app/response.json
-app/response_test.json
 app/__pycache__/*
+app/metrics_data/*
+app/raw_data/*
+app/cleaned_data/*
