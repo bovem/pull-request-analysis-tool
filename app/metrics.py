@@ -51,7 +51,8 @@ def extract_pipelinerun_statistics(pr_url, pr_comment):
     pr_stat = {"pr_url":pr_url,
                "pipelinerun_comment":False,
                "pipelinerun_status":"Passed",
-               "pipelinerun_duration":0}
+               "pipelinerun_duration":0,
+               "failed_taskrun":[]}
 
     for line in pr_comment:
         if "Pipeline:" in line and pr_stat.get("pipeline_name")==None:
@@ -75,11 +76,15 @@ def extract_pipelinerun_statistics(pr_url, pr_comment):
         if ":x:" in line:
             taskrun_name = line.split("|")[2].strip()
             pr_stat["taskrun"]=taskrun_name
+            pr_stat["failed_taskrun"] = pr["failed_taskrun"].append(taskrun_name)
             pr_stat["taskrun_status"]="Failed"
             pr_stat["taskrun_duration"]=convert_string_time(
                     line.split("|")[-2].strip())
             pr_stat["pipelinerun_duration"]+=pr_stat["taskrun_duration"]
             pr_stat["pipelinerun_status"]="Failed"
+    
+
+    pr_stat["failed_taskrun"] = " ".join(pr_stat["failed_taskrun"])
     
     return pr_stat
 

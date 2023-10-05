@@ -3,3 +3,4 @@ app/__pycache__/*
 app/metrics_data/*
 app/raw_data/*
 app/cleaned_data/*
+postgres-data/*
