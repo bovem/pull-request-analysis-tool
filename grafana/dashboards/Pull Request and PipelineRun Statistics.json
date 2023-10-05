@@ -78,12 +78,684 @@
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "Failed": {
+                  "color": "red",
+                  "index": 0
+                },
+                "Passed": {
+                  "color": "green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^pipelinerun_status$/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT pipelinerun_start_time, pipelinerun_status, pipelinerun FROM \"${repository_name}_pr_comments_stats\" WHERE (COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline') ORDER BY pipelinerun_start_time DESC LIMIT 1 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_start_time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_status",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": [
+                  "pipelinerun_start_time"
+                ],
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "88888b98-89ab-4cde-b012-318afe61ae65",
+                  "properties": {
+                    "field": "pipelinerun",
+                    "operator": "is_not_empty",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "8b8a8bb9-4567-489a-bcde-f18afe6259c1",
+                  "properties": {
+                    "field": "pipeline_name",
+                    "operator": "equal",
+                    "value": [
+                      "operator-hosted-pipeline"
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "text"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b8aa8a9a-89ab-4cde-b012-318afe506b63",
+              "type": "group"
+            },
+            "whereString": "(COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline')"
+          },
+          "table": "\"certified-operators_pr_comments_stats\""
+        }
+      ],
+      "title": "Last Hosted PipelineRun Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "Failed": {
+                  "color": "red",
+                  "index": 0
+                },
+                "Passed": {
+                  "color": "green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 37,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^pipelinerun_status$/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT pipelinerun_start_time, pipelinerun_status, pipelinerun FROM \"${repository_name}_pr_comments_stats\" WHERE (COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-release-pipeline') ORDER BY pipelinerun_start_time DESC LIMIT 1 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_start_time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_status",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": [
+                  "pipelinerun_start_time"
+                ],
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "88888b98-89ab-4cde-b012-318afe61ae65",
+                  "properties": {
+                    "field": "pipelinerun",
+                    "operator": "is_not_empty",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "8b8a8bb9-4567-489a-bcde-f18afe6259c1",
+                  "properties": {
+                    "field": "pipeline_name",
+                    "operator": "equal",
+                    "value": [
+                      "operator-hosted-pipeline"
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "text"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b8aa8a9a-89ab-4cde-b012-318afe506b63",
+              "type": "group"
+            },
+            "whereString": "(COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline')"
+          },
+          "table": "\"certified-operators_pr_comments_stats\""
+        }
+      ],
+      "title": "Last Release PipelineRun Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "Failed": {
+                  "color": "red",
+                  "index": 0
+                },
+                "Passed": {
+                  "color": "green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 36,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT pipelinerun_start_time, pipelinerun_status, pipelinerun, pr_url, pipelinerun_duration FROM \"${repository_name}_pr_comments_stats\" WHERE (COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline') ORDER BY pipelinerun_start_time DESC LIMIT 5 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_start_time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_status",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": [
+                  "pipelinerun_start_time"
+                ],
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "88888b98-89ab-4cde-b012-318afe61ae65",
+                  "properties": {
+                    "field": "pipelinerun",
+                    "operator": "is_not_empty",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "8b8a8bb9-4567-489a-bcde-f18afe6259c1",
+                  "properties": {
+                    "field": "pipeline_name",
+                    "operator": "equal",
+                    "value": [
+                      "operator-hosted-pipeline"
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "text"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b8aa8a9a-89ab-4cde-b012-318afe506b63",
+              "type": "group"
+            },
+            "whereString": "(COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline')"
+          },
+          "table": "\"certified-operators_pr_comments_stats\""
+        }
+      ],
+      "title": "Last 5 Hosted PipelineRuns",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "Failed": {
+                  "color": "red",
+                  "index": 0
+                },
+                "Passed": {
+                  "color": "green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pipelinerun_status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 143
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 38,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT pipelinerun_start_time, pipelinerun_status, pipelinerun, pr_url, pipelinerun_duration FROM \"${repository_name}_pr_comments_stats\" WHERE (COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-release-pipeline') ORDER BY pipelinerun_start_time DESC LIMIT 5 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_start_time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun_status",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "pipelinerun",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 1,
+            "orderBy": {
+              "property": {
+                "name": [
+                  "pipelinerun_start_time"
+                ],
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC",
+            "whereJsonTree": {
+              "children1": [
+                {
+                  "id": "88888b98-89ab-4cde-b012-318afe61ae65",
+                  "properties": {
+                    "field": "pipelinerun",
+                    "operator": "is_not_empty",
+                    "value": [],
+                    "valueSrc": [],
+                    "valueType": []
+                  },
+                  "type": "rule"
+                },
+                {
+                  "id": "8b8a8bb9-4567-489a-bcde-f18afe6259c1",
+                  "properties": {
+                    "field": "pipeline_name",
+                    "operator": "equal",
+                    "value": [
+                      "operator-hosted-pipeline"
+                    ],
+                    "valueSrc": [
+                      "value"
+                    ],
+                    "valueType": [
+                      "text"
+                    ]
+                  },
+                  "type": "rule"
+                }
+              ],
+              "id": "b8aa8a9a-89ab-4cde-b012-318afe506b63",
+              "type": "group"
+            },
+            "whereString": "(COALESCE(pipelinerun, '') <> '' AND pipeline_name = 'operator-hosted-pipeline')"
+          },
+          "table": "\"certified-operators_pr_comments_stats\""
+        }
+      ],
+      "title": "Last 5 Release PipelineRuns",
+      "type": "table"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 12
       },
       "id": 18,
       "panels": [],
@@ -118,7 +790,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 13
       },
       "id": 33,
       "options": {
@@ -237,7 +909,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 13
       },
       "id": 34,
       "options": {
@@ -346,7 +1018,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 5
+        "y": 17
       },
       "id": 31,
       "options": {
@@ -466,7 +1138,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 5
+        "y": 17
       },
       "id": 32,
       "options": {
@@ -592,7 +1264,7 @@
         "h": 4,
         "w": 9,
         "x": 0,
-        "y": 9
+        "y": 21
       },
       "id": 2,
       "options": {
@@ -697,7 +1369,7 @@
         "h": 4,
         "w": 7,
         "x": 9,
-        "y": 9
+        "y": 21
       },
       "id": 10,
       "options": {
@@ -787,7 +1459,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 9
+        "y": 21
       },
       "id": 9,
       "options": {
@@ -945,7 +1617,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 25
       },
       "id": 22,
       "options": {
@@ -1116,7 +1788,7 @@
         "h": 14,
         "w": 13,
         "x": 0,
-        "y": 21
+        "y": 33
       },
       "id": 7,
       "options": {
@@ -1224,7 +1896,7 @@
         "h": 14,
         "w": 11,
         "x": 13,
-        "y": 21
+        "y": 33
       },
       "id": 8,
       "options": {
@@ -1354,7 +2026,7 @@
         "h": 14,
         "w": 13,
         "x": 0,
-        "y": 35
+        "y": 47
       },
       "id": 30,
       "options": {
@@ -1480,7 +2152,7 @@
         "h": 14,
         "w": 11,
         "x": 13,
-        "y": 35
+        "y": 47
       },
       "id": 29,
       "options": {
@@ -1583,7 +2255,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 49
+        "y": 61
       },
       "id": 19,
       "panels": [],
@@ -1622,7 +2294,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 50
+        "y": 62
       },
       "id": 25,
       "options": {
@@ -1736,7 +2408,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 50
+        "y": 62
       },
       "id": 20,
       "options": {
@@ -1875,7 +2547,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 50
+        "y": 62
       },
       "id": 26,
       "options": {
@@ -1989,7 +2661,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 50
+        "y": 62
       },
       "id": 23,
       "options": {
@@ -2128,7 +2800,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 54
+        "y": 66
       },
       "id": 14,
       "options": {
@@ -2258,7 +2930,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 54
+        "y": 66
       },
       "id": 24,
       "options": {
@@ -2394,7 +3066,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 62
+        "y": 74
       },
       "id": 16,
       "options": {
@@ -2514,7 +3186,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 62
+        "y": 74
       },
       "id": 17,
       "options": {
@@ -2630,7 +3302,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 70
+        "y": 82
       },
       "id": 27,
       "options": {
@@ -2745,7 +3417,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 70
+        "y": 82
       },
       "id": 28,
       "options": {
@@ -2861,7 +3533,7 @@
         "h": 40,
         "w": 12,
         "x": 0,
-        "y": 78
+        "y": 90
       },
       "id": 12,
       "options": {
@@ -3026,7 +3698,7 @@
         "h": 21,
         "w": 12,
         "x": 12,
-        "y": 78
+        "y": 90
       },
       "id": 13,
       "options": {
