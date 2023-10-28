@@ -1,8 +1,19 @@
 # Pull Request Analysis Tool
 
-A pull requests and comment analytics tool.
+A pull requests analytics tool.
 
-## Pre-Requisites
+## Screenshots
+<img src="./docs/images/demo_image1.png"/>
+<img src="./docs/images/demo_image2.png"/>
+<img src="./docs/images/demo_image3.png"/>
+
+## Techstack
+* Python
+* PostgreSQL
+* Grafana
+* Docker
+
+## Setup and Installation
 1. Generate a GitHub API Token.
 
 2. Copy `example_config.json` to `config.json` and update values like GitHub API token, repository owners (for example `bovem`) and repository names (for example `pr-analysis-tool`)
