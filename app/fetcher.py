@@ -52,12 +52,6 @@ def update_pull_request_pages(config, repo_details):
     first_pr_page = pr_page_link + "&page=1"
     response = request_github_api(first_pr_page, config)
 
-    #fetched_data_path = "{}/*".format(config["RAW_DATA_PATH"])
-    #list_of_files = glob.glob(fetched_data_path)
-    #latest_file = max(list_of_files, key=os.path.getctime)
-
-    #last_fetched_file = read_file(latest_file)
-
     print("Number of PRs: {}".format(len(response)))
     pr_data_file_path = write_to_file(response, config["RAW_DATA_PATH"], "updated_pr_data", "json")
     return pr_data_file_path

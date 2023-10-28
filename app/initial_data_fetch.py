@@ -11,10 +11,6 @@ from db_loader import load_to_db, clean_files_older_than_one_day
 def fetch_initial_data(repo_details):
     config = load_config(os.environ.get("PAT_CONFIG_FILE"))
     pr_data_file = repository_pr_data_fetch(config, repo_details)
-    #if repo_details["REPO_NAME"]=="freeCodeCamp":
-    #   pr_data_file="./raw_data/pr_data_20231028_101835.json"
-    #elif repo_details["REPO_NAME"]=="tensorflow":
-    #    pr_data_file="./raw_data/pr_data_20231028_101402.json"
     pr_data_cleaned_file = clean_pr_data(config, pr_data_file)
 
     pr_metrics_df = calculate_pr_metrics(config, pr_data_cleaned_file)
