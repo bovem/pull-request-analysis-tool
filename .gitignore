@@ -1,4 +1,4 @@
-app/config.json
+app/config*.json
 app/__pycache__/*
 app/metrics_data/*
 app/raw_data/*

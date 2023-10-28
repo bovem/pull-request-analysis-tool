@@ -1,4 +1,6 @@
 import json
+import glob
+import pandas as pd
 import os
 from utils import write_to_file, read_file
 
@@ -37,26 +39,18 @@ def clean_pr_data(config, pr_data_file):
                                               "json")
     return cleaned_pr_data_file_path
 
-def clean_pr_comments_data(config, pr_comments_file):
-    pr_comments_data = read_file(pr_comments_file)
+def update_cleaned_pr_data(config):
+    fetched_data_path = "{}/pr_data*".format(config["RAW_DATA_PATH"])
+    list_of_files = glob.glob(fetched_data_path)
+    latest_fetched_data_file = read_file(max(list_of_files, key=os.path.getctime))
 
-    cleaned_pr_comments_data = []
+    df_fetched = pd.DataFrame(latest_fetched_data_file)
+    print(df_fetched.info())
 
-    for pr_comment in pr_comments_data:
-        if type(pr_comment)==dict:
-            cleaned_pr_comments_data.append({
-                "pr_comment_url": pr_comment.get("html_url", None),
-                "pr_url": pr_comment.get("html_url", None).split("#issuecomment")[0],
-                "pr_comment_user": pr_comment.get("user", {}).get("login", None),
-                "pr_comment_user_type": pr_comment.get("user", {}).get("type", None),
-                "pr_comment_created_at": pr_comment.get("created_at", None),
-                "pr_comment_updated_at": pr_comment.get("updated_at", None),
-                "pr_comment_author_association": pr_comment.get("author_association", None),
-                "pr_comment_body": pr_comment.get("body", None)
-            }) 
-    
-    cleaned_pr_comment_data_file_path = write_to_file(cleaned_pr_comments_data, 
-                                              config["CLEANED_DATA_PATH"], 
-                                              "cleaned_pr_comments_data", 
-                                              "json")
-    return cleaned_pr_comment_data_file_path
+    updated_data_path = "{}/updated_pr_data*".format(config["RAW_DATA_PATH"])
+    list_of_files = glob.glob(updated_data_path)
+    latest_updated_file = read_file(max(list_of_files, key=os.path.getctime))
+
+    df_updated = pd.DataFrame(latest_updated_file)
+    print(df_updated.info())
+

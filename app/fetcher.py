@@ -1,4 +1,5 @@
 import os
+import glob
 import requests
 import math
 import time
@@ -44,14 +45,19 @@ def repository_pr_data_fetch(config, repo_details):
     pr_data_file_path = write_to_file(pr_data, config["RAW_DATA_PATH"], "pr_data", "json")
     return pr_data_file_path
 
-def repository_comment_data_fetch(config, cleaned_pr_data):
-    pr_data = read_file(cleaned_pr_data)
+def update_pull_request_pages(config, repo_details):
+    pr_page_link = "https://api.github.com/repos/{}/{}/pulls?state=all&per_page=100&sort=updated&direction=desc"
+    pr_page_link = pr_page_link.format(repo_details["REPO_OWNER"], repo_details["REPO_NAME"])
 
-    comments_data = []
-    for pr in pr_data:
-        comments_data += request_github_api(pr["pr_comments_url"], config)
-        time.sleep(int(config["REQUEST_TIME_INTERVAL"]))
+    first_pr_page = pr_page_link + "&page=1"
+    response = request_github_api(first_pr_page, config)
 
-    print("Number of Comments: {}".format(len(pr_data)))
-    pr_comment_data_file_path = write_to_file(comments_data, config["RAW_DATA_PATH"], "comments_data", "json")
-    return pr_comment_data_file_path
+    #fetched_data_path = "{}/*".format(config["RAW_DATA_PATH"])
+    #list_of_files = glob.glob(fetched_data_path)
+    #latest_file = max(list_of_files, key=os.path.getctime)
+
+    #last_fetched_file = read_file(latest_file)
+
+    print("Number of PRs: {}".format(len(response)))
+    pr_data_file_path = write_to_file(response, config["RAW_DATA_PATH"], "updated_pr_data", "json")
+    return pr_data_file_path

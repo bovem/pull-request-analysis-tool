@@ -23,11 +23,20 @@ docker compose up -d
 
 3. Visit Grafana dashbaord at [localhost:3111](http://localhost:3111)
 
-4. Configure PostgreSQL [Data Connection](http://localhost:3111/connections/datasources) with the values provided in [docker-compose](./compose.yaml) file.
+4. Configure PostgreSQL [Data Connection](http://localhost:3111/connections/datasources) with the values provided in [compose.yaml](./compose.yaml) file.
 
-5. Open **Pull Request and PipelineRun Statistics Dashboard**.
+5. Change the value of `PAT_CONFIG_FILE` environment variable in [compose.yaml](./compose.yaml).
+
+6. Open **Pull Request and PipelineRun Statistics Dashboard**.
+
+7. Fetch Pull Request data from GitHub API
+
+## Initial Data Fetch
+```bash
+docker exec -it pr-analysis-tool-backend-1 python3 initial_data_fetch.py
+````
 
 ## Updating Data
 ```bash
-docker exec -it pr-analysis-tool-backend-1 python3 parallel_main.py
+docker exec -it pr-analysis-tool-backend-1 python3 update_data.py
 ```
