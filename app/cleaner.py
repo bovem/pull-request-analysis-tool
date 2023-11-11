@@ -2,7 +2,7 @@ import json
 import glob
 import pandas as pd
 import os
-from utils import write_to_file, read_file
+from app.utils import write_to_file, read_file
 
 def clean_pr_data(config, pr_data_file):
     pr_data = read_file(pr_data_file)

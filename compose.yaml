@@ -17,10 +17,11 @@ services:
     build: ./app/
     volumes:
       - ./app:/opt/app
+      - ./tests:/opt/tests
     depends_on:
       - database
     environment:
-      - PAT_CONFIG_FILE=./config.json
+      - PAT_CONFIG_FILE=/opt/app/config.json
     networks:
       - pat-network
     command:

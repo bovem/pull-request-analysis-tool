@@ -4,7 +4,7 @@ import requests
 import math
 import time
 import json
-from utils import write_to_file, read_file
+from app.utils import write_to_file, read_file
 
 def request_github_api(request_url, config):
     bearer_token = "Bearer {}".format(config["GITHUB_API_TOKEN"])
