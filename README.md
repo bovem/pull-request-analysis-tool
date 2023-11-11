@@ -51,3 +51,9 @@ docker exec -it pr-analysis-tool-backend-1 python3 initial_data_fetch.py
 ```bash
 docker exec -it pr-analysis-tool-backend-1 python3 update_data.py
 ```
+## Testing
+```bash
+cd tests
+pytest test_fetcher.py
+pytest test_cleaner.py
+```
